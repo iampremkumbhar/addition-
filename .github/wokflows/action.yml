@@ -1,0 +1,38 @@
+name: Addition Pipeline
+
+on: 
+  push:
+    branches:
+      - main  # Trigger workflow on pushes to the main branch
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Check out the code
+      uses: actions/checkout@v3
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: 16  # Use a compatible Node.js version
+
+    - name: Install dependencies
+      run: |
+        npm install htmlhint stylelint
+
+    - name: Lint HTML files
+      run: |
+        npx htmlhint "src/**/*.html"
+
+    - name: Lint CSS files
+      run: |
+        npx stylelint "src/**/*.css"
+
+    - name: Deploy to GitHub Pages
+      if: ${{ github.ref == 'refs/heads/main' }}  # Deploy only from the main branch
+      uses: peaceiris/actions-gh-pages@v3
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: ./src  # Replace with your app directory
