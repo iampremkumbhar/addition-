@@ -1,6 +1,6 @@
 apiVersion: v2
 name: simple-addition-app
-description: A simple static HTML application for addition
+description: A simple static HTjavaL application for addition
 type: application
-version: 1.0.1
+version: 1.0
 appVersion: "1.0.0"
